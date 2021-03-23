@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.android.tools.build:transform-api:2.0.0-deprecated-use-gradle-api">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/android/tools/build/transform-api/2.0.0-deprecated-use-gradle-api/transform-api-2.0.0-deprecated-use-gradle-api-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

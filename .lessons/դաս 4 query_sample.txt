@@ -1,0 +1,29 @@
+    @Query(value = "SELECT DISTINCT e.id FROM employee e " +
+            "LEFT OUTER JOIN employee_company ec on e.id = ec.employee_id " +
+            "LEFT OUTER JOIN company c on ec.company_id = c.id " +
+            "LEFT OUTER JOIN job_site_employee jse on e.id = jse.employee_id " +
+            "LEFT OUTER JOIN job_site j on jse.job_site_id = j.id " +
+            "INNER JOIN employee_pay_group epg on e.id = epg.employee_id " +
+            "INNER JOIN timelog t on e.id = t.employee_id " +
+            "INNER JOIN timelog_entry te on t.id = te.timelog_id " +
+            "WHERE (:companyId = 0 OR (c.id = :companyId AND " +
+            "(ec.end_date IS NULL OR (ec.end_date >= :startDate AND ec.end_date <= :endDate)) )) AND " +
+            "(:pmUserId = 0 OR j.id IN (" +
+            "SELECT je.job_site_id FROM job_site_employee je INNER JOIN employee e ON je.employee_id = e.id " +
+            "WHERE e.employee_type <> 'EMPLOYEE' AND e.user_id = :pmUserId AND je.end_date IS NULL)) AND " +
+            "(:jobSiteId = 0 OR (j.id = :jobSiteId AND " +
+            "(jse.end_date IS NULL OR (jse.end_date >= :startDate AND jse.end_date <= :endDate )) )) AND " +
+            "epg.end_date IS NULL AND (:payGroup = '' OR epg.pay_group = :payGroup) AND " +
+            "(:name = '' OR UPPER(e.last_name || ', ' || e.first_name) LIKE ('%' || UPPER(:name) || '%')) AND " +
+            "(:employeeNumber = '' OR e.employee_number LIKE (:employeeNumber || '%')) AND " +
+            "t.day BETWEEN CAST(:startDate AS DATE) AND CAST(:endDate AS DATE) AND " +
+            "(te.punchin_data_id IS NULL OR te.punchout_data_id IS NULL) AND te.pay_id = 'REG'",
+            nativeQuery = true)
+    List<BigInteger> getEmployeeIdsWithMissedPunch(@Param("pmUserId") Long pmUserId,
+                                                   @Param("companyId") Long companyId,
+                                                   @Param("jobSiteId") Long jobSiteId,
+                                                   @Param("payGroup") String payGroup,
+                                                   @Param("name") String name,
+                                                   @Param("employeeNumber") String employeeNumber,
+                                                   @Param("startDate") Date startDate,
+                                                   @Param("endDate") Date endDate);
